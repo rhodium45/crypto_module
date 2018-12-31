@@ -36,5 +36,5 @@ fn main() {
     let price = format!("{:.*}", 2, conv_price);
     let formatted_price = format!("{}", &price);
     let target = format!("{}", &ticker.target);
-    println!(" {} {}", formatted_price, target);
+    println!("  {} {} ", formatted_price, target);
 }
