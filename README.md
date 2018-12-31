@@ -11,10 +11,11 @@ A polybar module which tracks and displays the current price of BTC in USD
 
  Now add this into your modules.conf file or wherever you keep your modules
 
+```
  [module/crypto_module]
  type = custom/script
  exec = ~/path/to/crypto_module/target/release/crypto_module
  interval = 600
  label-font = 3
-
+```
 
