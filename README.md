@@ -23,6 +23,9 @@ label-font = 3
  
  * Go to src/config.rs
  * and exchange btc for ltc, usd for eur and  for LTC example
+ * and recompile w/ cargo build --release
+
+#### Example:
 
 ```
 let crypto_iso = String::from("btc");
