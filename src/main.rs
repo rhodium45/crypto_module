@@ -42,7 +42,6 @@ fn main() {
 
     // gets a JSON resp like
     // {"ticker":{"base":"BTC","target":"USD","price":"443.78078", .....},"timestamp":1399490941,"success":true,"error":""}
-    // let resp: Crypto = reqwest::get("https://api.cryptonator.com/api/ticker/btc-usd")
     let resp: Crypto = reqwest::get(&req_link)
         .expect("Could not make request")
         .json().expect("Could not read json");
