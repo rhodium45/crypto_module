@@ -4,15 +4,7 @@ extern crate reqwest;
 extern crate serde;
 extern crate serde_json;
 
-use std::fs::File;
-use std::io::prelude::*;
-
-#[derive(Serialize, Deserialize, Debug)]
-struct Config {
-    crypto_iso: String,
-    fiat_iso: String,
-    crypto_logo: String
-}
+mod config;
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Crypto {
@@ -31,12 +23,7 @@ struct Ticker {
 }
 
 fn main() {
-    let mut file = File::open("conf.toml").expect("Can't read file");
-    let mut config = String::new();
-    file.read_to_string(&mut config)
-        .expect("Could not read the file");
-    let config: Config = toml::from_str(&config).unwrap();
-    println!("File content: {:?}", config);
+    let config = config::get_config();
 
     let req_link = format!("https://api.cryptonator.com/api/ticker/{}-{}", config.crypto_iso, config.fiat_iso);
 
@@ -54,7 +41,7 @@ fn main() {
     let price = format!("{:.*}", 2, conv_price);
     let formatted_price = format!("{}", &price);
     let target = format!("{}", &ticker.target);
-    println!("  {} {} ", formatted_price, target);
+    println!("{}{} {}", config.crypto_logo, formatted_price, target);
 }
 
 
