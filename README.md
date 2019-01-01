@@ -19,3 +19,19 @@ interval = 600
 label-font = 3
 ```
 
+## How to configure
+ 
+ * Go to src/config.rs
+ * and exchange btc for ltc, usd for eur and  for LTC example
+
+```
+let crypto_iso = String::from("btc");
+let fiat_iso = String::from("usd");
+let crypto_logo = String::from(" ");
+``` 
+
+```
+let crypto_iso = String::from("ltc");
+let fiat_iso = String::from("eur");
+let crypto_logo = String::from("LTC");
+```

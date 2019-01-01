@@ -1,6 +1,3 @@
-use std::fs::File;
-use std::io::prelude::*;
-
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Config {
     pub crypto_iso: String,
@@ -9,11 +6,11 @@ pub struct Config {
 }
 
 pub fn get_config() -> Config {
-    let mut file = File::open("conf.toml").expect("Can't read file");
-    let mut config = String::new();
-    file.read_to_string(&mut config)
-        .expect("Could not read file");
-    
-    let config: Config = toml::from_str(&config).unwrap();
-    config
+    let crypto_iso = String::from("btc");
+    let fiat_iso = String::from("usd");
+    let crypto_logo = String::from(" ");
+
+    let conf = Config {crypto_iso: crypto_iso, fiat_iso: fiat_iso, crypto_logo: crypto_logo};
+    conf
 }
+
