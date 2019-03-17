@@ -26,31 +26,34 @@ struct Ticker {
 fn main() {
     let config = config::get_config();
 
-    let req_link = format!("https://api.cryptonator.com/api/ticker/{}-{}", config.crypto_iso, config.fiat_iso);
-
-    // gets a JSON resp like
-    // {"ticker":{"base":"BTC","target":"USD","price":"443.78078", .....},"timestamp":1399490941,"success":true,"error":""}
-    let resp: Crypto = reqwest::get(&req_link)
-        .expect("Could not make request")
-        .json().expect("Could not read json");
-    
+    let resp: Crypto = make_request(create_request_url(config.crypto_iso, config.fiat_iso));
     let ticker = resp.ticker;
 
-    // Converts string into float 
-    let conv_price: f64 = ticker.price.parse().unwrap();
-
-    let price = format!("{:.*}", 2, conv_price);
-    let formatted_price = format!("{}", &price);
-    let target = format!("{}", &ticker.target);
-    println!("{}{} {}", config.crypto_logo, formatted_price, target);
+    print_crypto(config.crypto_logo, format_price(ticker.price), format_target_currency(ticker.target));
 }
 
+fn create_request_url(crypto_iso: String, fiat_iso: String) -> String {
+    return format!("https://api.cryptonator.com/api/ticker/{}-{}", &crypto_iso, &fiat_iso);
+}
 
+fn make_request(req_url: String) -> Crypto {
+    return reqwest::get(&req_url)
+        .expect("Could not make request")
+        .json().expect("Could not read json");
+}
 
+fn convert_price(crypto_price: String) -> f64 {
+    return crypto_price.parse().unwrap();
+}
 
+fn format_price(price: String) -> String {
+    return format!("{:.*}", 2, convert_price(price));
+}
 
+fn format_target_currency(target: String) -> String {
+    return format!("{}", target);
+}
 
-
-
-
-
+fn print_crypto(logo: String, price: String, target: String) {
+    println!("{}{} {}", logo, price, target);
+}
