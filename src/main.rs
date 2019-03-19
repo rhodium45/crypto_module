@@ -27,9 +27,7 @@ fn main() {
     let config = config::get_config();
 
     let resp: Crypto = make_request(create_request_url(config.crypto_iso, config.fiat_iso));
-    let ticker = resp.ticker;
-
-    print_crypto(config.crypto_logo, format_price(ticker.price), format_target_currency(ticker.target));
+    print_crypto(config.crypto_logo, format_price(resp.ticker.price), format_target_currency(resp.ticker.target));
 }
 
 fn create_request_url(crypto_iso: String, fiat_iso: String) -> String {
